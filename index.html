@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Happy Birthday Didi! 🌸</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .main-title {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #8e44ad;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .sister-quote {
+            font-size: 1.2rem;
+            color: #6c5ce7;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .birthday-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            animation: slideInUp 1.5s ease-out;
+        }
+
+        .sister-memories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .memory-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 250px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a8e6cf, #dcedc8);
+            background-size: 400% 400%;
+            animation: gradientShift 4s infinite;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .memory-card:hover {
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .memory-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .wish-message {
+            text-align: center;
+            font-size: 1.4rem;
+            line-height: 1.9;
+            color: #2d3436;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(45deg, #ffeaa7, #fab1a0, #fd79a8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .sister-qualities {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .quality-item {
+            text-align: center;
+            margin: 20px;
+            animation: floatUp 3s ease-in-out infinite;
+            padding: 20px;
+            background: linear-gradient(45deg, #a8e6cf, #dcedc8);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .quality-item:hover {
+            transform: scale(1.1);
+        }
+
+        .quality-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .quality-emoji:hover {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        .quality-text {
+            font-size: 1.1rem;
+            color: #2d3436;
+            font-weight: bold;
+        }
+
+        .interactive-section {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .birthday-button {
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-family: 'Georgia', serif;
+        }
+
+        .birthday-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #5f3dc4, #7048e8);
+        }
+
+        .heart-animation {
+            position: fixed;
+            color: #e84393;
+            font-size: 2rem;
+            animation: heart-float 4s linear infinite;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .flower {
+            position: fixed;
+            font-size: 2.5rem;
+            animation: flower-fall 6s linear infinite;
+            z-index: 100;
+        }
+
+        .flower-1 { left: 5%; animation-delay: 0s; }
+        .flower-2 { left: 25%; animation-delay: 1.5s; }
+        .flower-3 { left: 45%; animation-delay: 3s; }
+        .flower-4 { left: 65%; animation-delay: 4.5s; }
+        .flower-5 { left: 85%; animation-delay: 6s; }
+
+        .music-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .music-note {
+            font-size: 2.5rem;
+            color: #e84393;
+            animation: musical-dance 2.5s infinite;
+            margin: 0 15px;
+        }
+
+        .sister-bond {
+            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .age-celebration {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            border: 3px solid #ff6b9d;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+            50% { text-shadow: 0 0 20px rgba(255, 107, 157, 0.8); }
+        }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0px); }
+            33% { transform: translateY(-10px); }
+            66% { transform: translateY(-5px); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes heart-float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes flower-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes musical-dance {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(-10deg); }
+            50% { transform: translateY(-8px) rotate(0deg); }
+            75% { transform: translateY(-12px) rotate(10deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 3rem; }
+            .subtitle { font-size: 1.4rem; }
+            .birthday-card { padding: 25px; }
+            .sister-qualities { flex-direction: column; align-items: center; }
+            .quality-item { margin: 15px 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Flowers -->
+    <div class="flower flower-1">🌸</div>
+    <div class="flower flower-2">🌺</div>
+    <div class="flower flower-3">🌹</div>
+    <div class="flower flower-4">🌷</div>
+    <div class="flower flower-5">🌻</div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">🌸 Happy Birthday Rimjhim Di! 🌸</h1>
+            <p class="subtitle">To the most unwanted 😂 sister in the world</p>
+            <div class="sister-quote">
+                hatute buddi ta asa kori ei bare jbe 
+            </div>
+            
+            <div class="music-section">
+                <span class="music-note">♪</span>
+                <span class="music-note">♫</span>
+                <span class="music-note">♪</span>
+                <span class="music-note">♫</span>
+                <span class="music-note">♪</span>
+            </div>
+        </header>
+
+        <div class="birthday-card">
+            <div class="wish-message">
+                <h2>🌟 Dear Didi, Today is YOUR Special Day! 🌟</h2>
+                <p><b>Eta chat gpt theke jhapa-</b>You've always been my guiding star, my protector, and my best friend. On your birthday, I want you to know how grateful I am to have you as my elder sister. You've shaped who I am today with your love, wisdom, and endless support. May this new year bring you all the happiness, success, and beautiful moments you deserve!</p>
+            </div>
+
+            <div class="sister-memories">
+                <div class="memory-card" onclick="createHearts()">
+                    <div class="memory-icon">👓</div>
+                    <p><strong>Congrats to become Chasmis</strong><br>Congratulations to become a successful Chasmis with four eyes</p>
+                </div>
+               
+                <div class="memory-card" onclick="createHearts()">
+                    <div class="memory-icon">🍦</div>
+                    <p><strong>Icecream Treat</strong><br>Thanks for icecream treat ei bareo icecream khaoyas</p>
+                </div>
+                 <div class="memory-card" onclick="createHearts()">
+   <div class="memory-icon">📚</div>
+   <p><strong>Study Buddy</strong><br>Thank you for mot helping me with homework!</p>
+ </div>
+              
+                <div class="memory-card" onclick="createHearts()">
+                    <div class="memory-icon">🧠</div>
+                    <p><strong>With hatute buddi</strong><br>asa kori ei bareo hatute buddi proman kore dibi</p>
+                </div>
+            </div>
+
+            <div class="sister-qualities">
+                <div class="quality-item">
+                    <div class="quality-emoji" onclick="createHearts()">🧠</div>
+                    <div class="quality-text">Hatute</div>
+                </div>
+                <div class="quality-item">
+                    <div class="quality-emoji" onclick="createHearts()">🧠</div>
+                    <div class="quality-text">Wise🤣</div>
+                </div>
+                <div class="quality-item">
+                    <div class="quality-emoji" onclick="createHearts()">💪</div>
+                    <div class="quality-text">Strong😲🤭🤣</div>
+                </div>
+                <div class="quality-item">
+                    <div class="quality-emoji" onclick="createHearts()">😄</div>
+                    <div class="quality-text">Funny</div>
+                </div>
+                <div class="quality-item">
+                    <div class="quality-emoji" onclick="createHearts()">🌟</div>
+                    <div class="quality-text">jhogrute</div>
+                </div>
+            </div>
+
+            <div class="age-celebration">
+                <h3>🎂 Another Year of Amazing You! 🎂</h3>
+                <p>Each year you become more beautiful, more wise, and more wonderful. Age is just a number, but your spirit is timeless!<b> - micha kotha</b></p>
+            </div>
+
+            <div class="interactive-section">
+                <h3>🎵 Birthday Celebration for Didi 🎵</h3>
+                <p>Click below to make your special day even more magical!</p>
+                <button class="birthday-button" onclick="playBirthdaySong()">🎵 Sing Birthday Song</button>
+
+                <button class="birthday-button" onclick="birthdayWishes()">🌟 Special Wishes</button>
+                <button class="birthday-button" onclick="createCelebration()">🎉 Grand Celebration</button>
+            </div>
+
+            <div class="sister-bond">
+                <h3>👭 The Bond We Share 👭</h3>
+                <p><strong>Didi, you are not just my sister, you are:</strong></p>
+                <b>see more...</b>
+            </div>
+
+            <div class="wish-message" style="background: linear-gradient(45deg, #a8e6cf, #dcedc8, #ffd3e1);">
+                <h3>🎁 Birthday Wishes for My Amazing Didi 🎁</h3>
+                <h3>Lol see more hoini 😂 </h3>
+                
+                <p>✨ Dreams that come true</p>
+                <p>🎊 Laughter that echoes through the year</p>
+                <p>🌺 Beautiful surprises at every turn</p>
+                <p>💖 Endless happiness and good health</p>
+                <p>🎈 Adventures that make your soul happy</p>
+              
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Heart animation for sister's love
+        function createHearts() {
+            const heartSymbols = ['💕', '💖', '💗', '💓', '💝', '❤️', '🧡', '💛', '💚', '💙', '💜'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-animation';
+                    heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 4000);
+                }, i * 100);
+            }
+        }
+
+        // Birthday song for didi
+        function playBirthdaySong() {
+            const songs = [
+                "🎵 Happy Birthday to you! Happy Birthday to you! Happy Birthday dear Didi! Happy Birthday to you! 🎵",
+                "🎶 Didi, it's your special day, let's celebrate in every way! Happy Birthday! 🎶"
+            ];
+            alert(songs[Math.floor(Math.random() * songs.length)]);
+            createHearts();
+        }
+
+        // Show sister's love
+        function showSisterLove() {
+            const loveMessages = [
+                "💕 You're the best sister anyone could ask for!",
+                "🌟 You light up every room you enter, Didi!",
+                "💖 Thank you for being my role model and best friend!",
+                "🌸 Your kindness and love make the world brighter!",
+                "💝 I'm so lucky to have you as my elder sister!"
+            ];
+            const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+            alert(randomMessage);
+            createHearts();
+        }
+
+        // Birthday wishes
+        function birthdayWishes() {
+            const wishes = [
+                "🌈 May this year bring you all the colors of happiness!",
+                "✨ Wishing you a year full of magical moments and dreams come true!",
+                "🎊 May your birthday be as special and wonderful as you are!",
+                "🌺 Here's to another year of your amazing journey, Didi!",
+                "🎁 May life unwrap beautiful surprises for you this year!"
+            ];
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            alert(randomWish);
+            createHearts();
+        }
+
+        // Grand celebration
+        function createCelebration() {
+            createHearts();
+            setTimeout(() => createHearts(), 500);
+            setTimeout(() => createHearts(), 1000);
+            setTimeout(() => createHearts(), 1500);
+            alert("🎉 Happy Birthday Didi! 🎉\nYou deserve all the celebration in the world!\nHere's to you - the most amazing sister ever! 💕");
+        }
+
+        // Auto-create hearts on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                createHearts();
+            }, 2000);
+            
+            // Periodic heart animations
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createHearts();
+                }
+            }, 10000);
+        });
+
+        // Add click effects to memory cards
+        document.querySelectorAll('.memory-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(1.15) rotate(5deg)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+              </html>

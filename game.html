@@ -1,1 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Balloon Pop Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        .confetti:nth-child(2n) { background: #4ecdc4; }
+        .confetti:nth-child(3n) { background: #45b7d1; }
+        .confetti:nth-child(4n) { background: #96ceb4; }
+        .confetti:nth-child(5n) { background: #ffd93d; }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            cursor: crosshair;
+        }
+
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .score-time {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            cursor: pointer;
+            transition: transform 0.1s;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: #333;
+        }
+
+        .balloon:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .balloon.red { background: linear-gradient(135deg, #ff6b6b, #ee5a52); }
+        .balloon.blue { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .balloon.yellow { background: linear-gradient(135deg, #ffd93d, #f6c23e); }
+        .balloon.green { background: linear-gradient(135deg, #96ceb4, #85c5a6); }
+        .balloon.purple { background: linear-gradient(135deg, #a8e6cf, #88d8a3); }
+        .balloon.pink { background: linear-gradient(135deg, #ff8a95, #ff686b); }
+
+        .pop-effect {
+            position: absolute;
+            pointer-events: none;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: pop-up 0.8s ease-out forwards;
+        }
+
+        @keyframes pop-up {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+        }
+
+        .game-over h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .final-score {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .play-again {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: inherit;
+        }
+
+        .play-again:hover {
+            transform: scale(1.05);
+        }
+
+        .birthday-cake {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 3rem;
+            animation: cake-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes cake-bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <!-- Confetti -->
+        <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="confetti" style="left: 20%; animation-delay: 0.5s;"></div>
+        <div class="confetti" style="left: 30%; animation-delay: 1s;"></div>
+        <div class="confetti" style="left: 40%; animation-delay: 1.5s;"></div>
+        <div class="confetti" style="left: 50%; animation-delay: 2s;"></div>
+        <div class="confetti" style="left: 60%; animation-delay: 0.7s;"></div>
+        <div class="confetti" style="left: 70%; animation-delay: 1.2s;"></div>
+        <div class="confetti" style="left: 80%; animation-delay: 1.8s;"></div>
+        <div class="confetti" style="left: 90%; animation-delay: 0.3s;"></div>
+
+        <div class="header">
+            <h1 class="title">🎈 Birthday Balloon Pop! 🎈</h1>
+            <div class="score-time">
+                <div>Score: <span id="score">0</span></div>
+                <div>Time: <span id="timer">30</span>s</div>
+            </div>
+        </div>
+
+        <div class="birthday-cake">🎂</div>
+
+        <div class="game-over" id="gameOver">
+            <h2>🎉 Happy Birthday! 🎉</h2>
+            <div class="final-score" id="finalScore">Your Score: 0</div>
+            <button class="play-again" onclick="startGame()">Play Again!</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 30;
+        let gameActive = false;
+        let gameTimer;
+        let balloonSpawnTimer;
+
+        const gameContainer = document.getElementById('gameContainer');
+        const scoreElement = document.getElementById('score');
+        const timerElement = document.getElementById('timer');
+        const gameOverElement = document.getElementById('gameOver');
+        const finalScoreElement = document.getElementById('finalScore');
+
+        const balloonColors = ['red', 'blue', 'yellow', 'green', 'purple', 'pink'];
+        const popSounds = ['POP!', 'BOOM!', '💥', '🎉', '⭐'];
+
+        function startGame() {
+            score = 0;
+            timeLeft = 30;
+            gameActive = true;
+            
+            scoreElement.textContent = score;
+            timerElement.textContent = timeLeft;
+            gameOverElement.style.display = 'none';
+            
+            // Clear existing balloons
+            document.querySelectorAll('.balloon').forEach(balloon => balloon.remove());
+            document.querySelectorAll('.pop-effect').forEach(effect => effect.remove());
+            
+            // Start timers
+            gameTimer = setInterval(updateTimer, 1000);
+            balloonSpawnTimer = setInterval(spawnBalloon, 800);
+            
+            // Spawn initial balloons
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => spawnBalloon(), i * 300);
+            }
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearInterval(gameTimer);
+            clearInterval(balloonSpawnTimer);
+            
+            finalScoreElement.textContent = `Your Score: ${score}`;
+            gameOverElement.style.display = 'block';
+            
+            // Remove remaining balloons
+            setTimeout(() => {
+                document.querySelectorAll('.balloon').forEach(balloon => {
+                    balloon.style.animation = 'none';
+                    balloon.style.transform = 'translateY(100vh)';
+                    balloon.style.transition = 'transform 1s ease-in';
+                });
+            }, 500);
+        }
+
+        function spawnBalloon() {
+            if (!gameActive) return;
+            
+            const balloon = document.createElement('div');
+            balloon.className = `balloon ${balloonColors[Math.floor(Math.random() * balloonColors.length)]}`;
+            
+            // Random position
+            const x = Math.random() * (window.innerWidth - 60);
+            const y = Math.random() * (window.innerHeight - 200) + 100;
+            
+            balloon.style.left = x + 'px';
+            balloon.style.top = y + 'px';
+            
+            // Add click event
+            balloon.addEventListener('click', function(e) {
+                if (!gameActive) return;
+                
+                popBalloon(this, e);
+            });
+            
+            gameContainer.appendChild(balloon);
+            
+            // Remove balloon after some time if not clicked
+            setTimeout(() => {
+                if (balloon.parentNode && gameActive) {
+                    balloon.style.transform = 'translateY(-100px)';
+                    balloon.style.opacity = '0';
+                    setTimeout(() => {
+                        if (balloon.parentNode) {
+                            balloon.remove();
+                        }
+                    }, 500);
+                }
+            }, 4000);
+        }
+
+        function popBalloon(balloon, event) {
+            score += 10;
+            scoreElement.textContent = score;
+            
+            // Create pop effect
+            const popEffect = document.createElement('div');
+            popEffect.className = 'pop-effect';
+            popEffect.textContent = popSounds[Math.floor(Math.random() * popSounds.length)];
+            popEffect.style.left = balloon.style.left;
+            popEffect.style.top = balloon.style.top;
+            
+            gameContainer.appendChild(popEffect);
+            
+            // Remove balloon and effect
+            balloon.remove();
+            setTimeout(() => popEffect.remove(), 800);
+            
+            // Bonus time for good performance
+            if (score % 100 === 0 && score > 0) {
+                timeLeft += 5;
+                timerElement.textContent = timeLeft;
+                
+                const bonusEffect = document.createElement('div');
+                bonusEffect.className = 'pop-effect';
+                bonusEffect.textContent = '+5 TIME BONUS!';
+                bonusEffect.style.left = '50%';
+                bonusEffect.style.top = '40%';
+                bonusEffect.style.fontSize = '1.5rem';
+                bonusEffect.style.color = '#ffd93d';
+                gameContainer.appendChild(bonusEffect);
+                setTimeout(() => bonusEffect.remove(), 800);
+            }
+        }
+
+        // Start the game when page loads
+        window.addEventListener('load', startGame);
+
+        // Prevent right-click context menu for better game experience
+        gameContainer.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>
+</antArtifact>I've created a fun birthday-themed balloon popping game! Here's what the game includes:
+
+🎮 **Game Features:**
+- **Objective**: Pop as many colorful balloons as possible in 30 seconds
+- **Scoring**: Each balloon gives you 10 points
+- **Bonus**: Every 100 points earned gives you +5 extra seconds
+- **Visual Effects**: Floating confetti, pop animations, and birthday cake decoration
+
+🎈 **How to Play:**
+1. Click on the floating balloons to pop them
+2. Try to score as many points as possible before time runs out
+3. Balloons appear randomly and disappear if not clicked quickly
+4. Watch for the bonus time rewards!
+
+The game features:
+- Colorful gradient balloons that float and animate
+- Festive confetti falling in the background
+- Pop effects with fun animations
+- A birthday cake decoration
+- Responsive design that works on different screen sizes
+- Automatic restart option when the game ends
+
+The game combines birthday celebration vibes with engaging gameplay mechanics. Perfect for adding some fun to a birthday celebration!

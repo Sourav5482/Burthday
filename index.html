@@ -312,6 +312,39 @@
             .sister-qualities { flex-direction: column; align-items: center; }
             .quality-item { margin: 15px 0; }
         }
+        .play-btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.play-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .play-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .play-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+  }
+}
     </style>
 </head>
 <body>
@@ -419,7 +452,7 @@
                 <p>💖 Endless happiness and good health</p>
                 <p>🎈 Adventures that make your soul happy</p>
               
-                
+<a href="game.html" class="play-btn">PLAY GAME</a>
             </div>
         </div>
     </div>
@@ -516,4 +549,4 @@
         });
     </script>
 </body>
-              </html>
+                </html>
